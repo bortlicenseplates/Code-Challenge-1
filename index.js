@@ -46,32 +46,37 @@ IO.recursiveRequestCommand(commands => {
     }
 
     for(commandNum = 0; commandNum < commandsList.length; commandNum ++){
+        let res;
         if (typeof pacman !== "object"){
-            noPac(commandsList);
+            res = noPac(commandsList, commandNum);
         } else {
-            pacReady(commandsList);
+            res = pacReady(commandsList, commandNum);
         }
+        if(typeof res === "number") commandNum = res;
+        return res;
     }
 });
 
-function noPac(commandsList){
+
+
+function noPac(commandsList, commandNum){
     const command = commandsList[commandNum];
     switch (command){
         case "exit": return "exit";
         case "place":
-            createPac(commandsList);
+            return createPac(commandsList, commandNum);
         break;
         default:
             console.error(`Please place Pacman on the map first by using the "PLACE" command.`);
         break;
     }
 }
-function pacReady(commandsList){
+function pacReady(commandsList, commandNum){
     const command = commandsList[commandNum];
     switch (command){
         case "exit": return "exit";
         case "place":
-            createPac(commandsList);
+            return createPac(commandsList, commandNum);
         break;
         case "move":
             pacman.move();
@@ -86,22 +91,20 @@ function pacReady(commandsList){
             pacman.report();
         break;
         default:
-            console.error(`"${commands}" is not a valid command`);
+            console.error(`"${command}" is not a valid command`);
         break;
     }
 }
 
 
-function createPac(commandsList){
-    const coordsString = commandsList[commandNum+1];
-    commandNum++;
-    const placeCoords = interpreter.getPlaceCoordinates(coordsString);
+function createPac(commandsList, commandNum){
+    const placeCoords = interpreter.getPlaceCoordinates(commandsList[commandNum+1]);
+
     if(!grid.isInsideMap(placeCoords.x, placeCoords.y)){
         console.error(`(${placeCoords.x}, ${placeCoords.y}) is not inside the grid (${grid.size.x}, ${grid.size.y}). Please try placing Pacman again`);
-        return;
+        return commandNum+1;;
     } else {
         pacman = new Pacman(placeCoords.x, placeCoords.y, placeCoords.direction, grid);
-
-        console.dir(grid, pacman.grid);
+        return commandNum+1;;
     }
 }
