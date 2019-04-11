@@ -1,0 +1,28 @@
+{
+  "name": "code-challenge-1",
+  "version": "1.0.0",
+  "description": "Code Challenge for IE Digital",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bortlicenseplates/Code-Challenge-1.git"
+  },
+  "keywords": [
+    "javascript",
+    "node",
+    "pacman",
+    "code-challenge"
+  ],
+  "author": "jamer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bortlicenseplates/Code-Challenge-1/issues"
+  },
+  "homepage": "https://github.com/bortlicenseplates/Code-Challenge-1#readme",
+  "devDependencies": {
+    "jest": "^24.7.1"
+  }
+}
