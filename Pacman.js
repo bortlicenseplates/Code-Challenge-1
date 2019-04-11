@@ -40,8 +40,13 @@ const vectorDirection = {
 };
 
 function directionToVector(direction){
-	const vectorProps = vectorDirection[direction];
-	return new Vector(vectorProps[0], vectorProps[1]);
+	try {
+		const vectorProps = vectorDirection[direction];
+		return new Vector(vectorProps[0], vectorProps[1]);
+	} catch(e) {
+		console.log(`${direction} is not a valid direction. Please try placing Pacman again.`);
+	}
+
 }
 function vectorToDirection(vector){
 	const vecArr = new Array(vector.x, vector.y);
