@@ -7,9 +7,11 @@ const readline = require('readline').createInterface({
 
 const recursiveRequestCommand = (cb) => {
     readline.question('COMMAND: ', command => {
-		cb(command);
+		if(cb(command) === "exit"){
+			return readline.close();
+		}
         recursiveRequestCommand(cb);
-    })
+    });
 }
 
 module.exports = {
