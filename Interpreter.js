@@ -1,14 +1,21 @@
 //regex match commands to keywords and return the list if exists;
-const regexCommands = /place\s\d*,\d*,(north|south|east|west)|move|left|report|exit/gi
+const regexCommands = /place\s\d*,\d*,(north|south|east|west)|move|left|right|report|exit/gi
 
-const listCommands = input => input.toLowerCase().match(regexCommands);
+const getCommands = input => input.toLowerCase().match(regexCommands);
 
-const getCommands = (input) => {
-	const commandList = listCommands(input);
+const getCommandsBetter = input => input.split((/\s/gi));
 
-	return commandList;
+const getPlaceCoordinates = input => {
+	const coordinateArray = input.split((/,/gi));
+
+	return {
+		x: parseInt(coordinateArray[0]),
+		y: parseInt(coordinateArray[1]),
+		direction: coordinateArray[2]
+	};
 }
-
 module.exports = {
-	getCommands
+	getCommands,
+	getCommandsBetter,
+	getPlaceCoordinates
 }
