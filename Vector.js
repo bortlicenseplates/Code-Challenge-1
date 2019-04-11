@@ -1,4 +1,3 @@
-
 module.exports = class Vector{
 	constructor(...args){
 		typeof args[0] === "number" ? this.x = args[0] : 0;
