@@ -1,9 +1,21 @@
 {
 	"place":{
 		"position":{
-			"x": 0,
-			"y": 0,
-			"direction": "north"
+			"x": {
+				"type": "int"
+			},
+			"y": {
+				"type": "int"
+			},
+			"direction": {
+				"type": "string",
+				"values": [
+					"north",
+					"south",
+					"east",
+					"west"
+				]
+			}
 		},
 		"description": "PLACE X,Y,DIRECTION\nPut Pacman on the grid in positon X,Y and facing NORTH,SOUTH, EAST or WEST.\n\nexample: $ PLACE 2,3,NORTH\nPlaces pacman at position 2,3 facing NORTH."
 	},
