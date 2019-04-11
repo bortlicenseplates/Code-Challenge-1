@@ -8,13 +8,13 @@ module.exports = class Grid{
 	isInsideMap(x,y){
 		const XInside = isInRange(x, this.origin.x, this.size.x);
 		const YInside = isInRange(y, this.origin.y, this.size.y);
-		if(XInside && YInside)
+		if(XInside && YInside){
 			return true;
+		}
 		return false;
 	}
 }
 
-//hidden from imports
 const isInRange = (input, min, max) => {
 	if (input >= min && input <= max)
 		return true;
