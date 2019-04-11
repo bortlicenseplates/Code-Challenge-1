@@ -1,25 +1,26 @@
-const vectorDirection = {
-	north: [0,1],
-	east: [1,0],
-	south: [0,-1],
-	west: [-1,0]
-};
-const grid = require('./Grid');
+// const grid = require('./Grid');
 const Vector = require('./Vector');
+
+
 module.exports = class Pacman{
-	constructor(x, y, direction){
+	constructor(x, y, direction, grid){
 		this.position = new Vector(x, y);
 		this.direction = new directionToVector(direction);
-
+		this.grid = grid;
 	}
 	turnLeft(){
-		this.direction = this.direction.turn(-1);
+		this.direction = this.direction.rotateAroundOrigin(-1);
 	}
 	turnRight(){
-		this.direction = this.direction.turn(1);
+		this.direction = this.direction.rotateAroundOrigin(1);
 	}
 	move(){
-		this.position = this.position.add(this.direction);
+		const newPos = this.position.add(this.direction);
+		if(this.grid.isInsideMap(newPos.x, newPos.y)){
+			this.position = newPos;
+		} else {
+			console.error(`(${newPos.x}, ${newPos.y}) is not inside the grid (${this.grid.size.x}, ${this.grid.size.y}). Please try moving in a different direction or using the place command`);
+		}
 	}
 	report(){
 		const info = {
@@ -30,6 +31,13 @@ module.exports = class Pacman{
 		console.log(`${info.x}, ${info.y}, ${info.direction}`);
 	}
 }
+
+const vectorDirection = {
+	north: [0,1],
+	east: [1,0],
+	south: [0,-1],
+	west: [-1,0]
+};
 
 function directionToVector(direction){
 	const vectorProps = vectorDirection[direction];
