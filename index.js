@@ -3,7 +3,8 @@ const Pacman = require('./Pacman');
 const interpreter = require('./Interpreter');
 const IO = require('./IO');
 
-const pacman = new Pacman(new Grid(5,5));
+
+
 
 const help = () => console.log(`
 
@@ -31,25 +32,76 @@ Command list:
 
 `);
 
+let pacman;
+const grid = new Grid(5,5);
 
-const run = () => {
-    help();
+help();
 
-    IO.recursiveRequestCommand(commands => {
+IO.recursiveRequestCommand(commands => {
 
-        const commandsList = interpreter.getCommands(commands);
-        console.log(typeof commandsList);
-        if(commandsList === null){
-            console.error(`"${commands}" is not a valid command`);
-            return;
+    const commandsList = interpreter.getCommands(commands);
+    if(commandsList === null){
+        console.error(`"${commands}" is not a valid command`);
+        return;
+    }
+
+    for(commandNum = 0; commandNum < commandsList.length; commandNum ++){
+        if (typeof pacman !== "object"){
+            noPac(commandsList);
+        } else {
+            pacReady(commandsList);
         }
+    }
+});
 
-        commandsList.forEach(command => {
-            if (command === "exit") {
-                return command;
-            }
-        });
-    });
+function noPac(commandsList){
+    const command = commandsList[commandNum];
+    switch (command){
+        case "exit": return "exit";
+        case "place":
+            createPac(commandsList);
+        break;
+        default:
+            console.error(`Please place Pacman on the map first by using the "PLACE" command.`);
+        break;
+    }
+}
+function pacReady(commandsList){
+    const command = commandsList[commandNum];
+    switch (command){
+        case "exit": return "exit";
+        case "place":
+            createPac(commandsList);
+        break;
+        case "move":
+            pacman.move();
+        break;
+        case "left":
+            pacman.turnLeft();
+        break;
+        case "right":
+            pacman.turnRight();
+        break;
+        case "report":
+            pacman.report();
+        break;
+        default:
+            console.error(`"${commands}" is not a valid command`);
+        break;
+    }
 }
 
-run();
+
+function createPac(commandsList){
+    const coordsString = commandsList[commandNum+1];
+    commandNum++;
+    const placeCoords = interpreter.getPlaceCoordinates(coordsString);
+    if(!grid.isInsideMap(placeCoords.x, placeCoords.y)){
+        console.error(`(${placeCoords.x}, ${placeCoords.y}) is not inside the grid (${grid.size.x}, ${grid.size.y}). Please try placing Pacman again`);
+        return;
+    } else {
+        pacman = new Pacman(placeCoords.x, placeCoords.y, placeCoords.direction, grid);
+
+        console.dir(grid, pacman.grid);
+    }
+}

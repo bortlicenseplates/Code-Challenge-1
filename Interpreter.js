@@ -1,9 +1,6 @@
-//regex match commands to keywords and return the list if exists;
-const regexCommands = /place\s\d*,\d*,(north|south|east|west)|move|left|right|report|exit/gi
 
-const getCommands = input => input.toLowerCase().match(regexCommands);
 
-const getCommandsBetter = input => input.split((/\s/gi));
+const getCommands = input => input.split((/\s/gi));
 
 const getPlaceCoordinates = input => {
 	const coordinateArray = input.split((/,/gi));
@@ -16,6 +13,5 @@ const getPlaceCoordinates = input => {
 }
 module.exports = {
 	getCommands,
-	getCommandsBetter,
 	getPlaceCoordinates
 }
