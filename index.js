@@ -88,7 +88,7 @@ function pacReady(commandsList, commandNum){
             pacman.turnRight();
         break;
         case "report":
-            pacman.report();
+            console.log(pacman.report());
         break;
         default:
             console.error(`"${command}" is not a valid command`);
@@ -107,4 +107,10 @@ function createPac(commandsList, commandNum){
         pacman = new Pacman(placeCoords.x, placeCoords.y, placeCoords.direction, grid);
         return commandNum+1;;
     }
+}
+
+module.exports = {
+    createPac,
+    pacReady,
+    noPac
 }

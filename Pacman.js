@@ -28,6 +28,6 @@ module.exports = class Pacman{
 			y: this.position.y,
 			direction: helpers.vectorToDirection(this.direction)
 		}
-		console.log(`${info.x}, ${info.y}, ${info.direction}`);
+		return (`${info.x},${info.y},${info.direction}`);
 	}
 }
